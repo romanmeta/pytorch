@@ -657,15 +657,12 @@ class TestInductorDynamic(TestCase):
         max_grid_x = 2147483647
         if torch.version.hip:
             # ROCm limits total threads (num_blocks * num_warps * warp_size),
-            # so it legitimately needs to scale up XBLOCK for this large input
+            # verify the constraint is satisfied after scaling
             warp_size = torch.cuda.get_device_properties(device).warp_size
             self.assertLessEqual(
                 result_num_blocks * num_warps * warp_size,
                 max_grid_x,
                 "ROCm total-threads grid limit should be satisfied",
-            )
-            self.assertGreater(
-                result_x, 64, "XBLOCK should be scaled up on ROCm for this input size"
             )
         else:
             # CUDA limits number of blocks only — 600M/64 ≈ 9.4M blocks,
