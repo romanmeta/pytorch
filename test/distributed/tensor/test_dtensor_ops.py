@@ -835,6 +835,7 @@ ops_unbacked_dtensor_dde = {
     xfail("new_full"),
     xfail("new_ones"),
     xfail("new_zeros"),
+    xfail("nn.functional.adaptive_avg_pool1d"),
     xfail("nn.functional.celu"),
     xfail("nn.functional.cosine_embedding_loss"),
     xfail("nn.functional.elu"),
